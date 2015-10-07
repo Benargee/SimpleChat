@@ -2,10 +2,14 @@
 //
 
 #include "stdafx.h"
+#include <iostream>
 
+using namespace std;
 
 int main()
 {
-    return 0;
+	cout << "test" << endl;
+	system("pause");//Replace with better pause function!
+	return 0;
 }
 
