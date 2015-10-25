@@ -2,55 +2,107 @@
 //
 
 #include "stdafx.h"
-#include <iostream>
-#include <string>
+#include <curses.h>
+#include <thread>
+#include <windows.h>
 
 using namespace std;
 
-int mainChat()
+int ch, inx, iny, outx, outy;
+int row, col, cursx, cursy;
+char mesg[500];
+
+
+//constantly output incrementing numbers untill program is closed
+void outputTimer() {
+	int mynum;
+
+	for (mynum = 0; mynum <= 15; mynum++)
+	{
+		//getyx(stdscr, cursy, cursx);
+		mvprintw(outy, 0, "Sample message %i", mynum);
+		outy++;
+		//printw("%i %i %i\n", mynum, cursy, iny);
+		move(row - 1, inx);
+		refresh();
+		Sleep(3000);
+
+	}
+	//refresh();
+	/*add function to start printing from bottom and shift rows up. history could be stored in a pointer array  to strings of 500 character lengths. struct could be used for this?
+	data will be stored in memory and then printed from memory.*/
+}
+
+
+void submain1()
 {
-	string MainPrompt;
-	getline(cin, MainPrompt);//Puts whole line into variable with spaces http://stackoverflow.com/questions/5838711/c-cin-input-with-spaces
-	
-	if (MainPrompt == "/server")//TODO use hash with switch for commands http://stackoverflow.com/questions/16388510/evaluate-a-string-with-a-switch-in-c http://stackoverflow.com/questions/2535284/how-can-i-hash-a-string-to-an-int-using-c
+	//char mychar;
+	ch = getch();
+	//mvaddch(20, 5, ch);
+
+	switch (ch)  //if enter is pressed, delete input line and reset input cursor position
 	{
-		cout << "hosting server..." << endl;
-		mainChat();
+	case 13:   //if enter is pressed, delete input line and reset input cursor position
+		mvprintw(outy, 0, "%s", mesg);	// print message to chat
+		move(row - 1, 0);
+		memset(mesg, 0, sizeof mesg); //empty mesg[80] and get it ready for a new input message
+		clrtoeol();
+		refresh();
+		iny = row - 1;
+		inx = 0;
+
+
+		outy++;
+		submain1();
+
+	case 8: //backspace						
+		if (inx > 0) // if cursor is already at the start of the line, do not bother backspacing characters
+		{
+			inx--;
+			mvprintw(iny, inx, "%c", 32);
+			move(row - 1, inx);
+			mesg[inx] = '\0';//set charachter to null
+		}
+		refresh();
+		submain1();
+
+
+	default:
+		mvprintw(20, 20, "%i %i", ch, inx);	 //debug, print character as an integer on screen
+		mvprintw(iny, inx, "%c", ch);
+		mesg[inx] = ch;
+		inx++;
+		refresh();
+		submain1();
 	}
-	else if (MainPrompt == "/client")
-	{
-		cout << "searching for server..." << endl;
-		mainChat();
-	}
-	else if (MainPrompt == "/help")
-	{
-		cout << "Help Menu:\nType ""/server"" to host a chat server\nType ""/client"" to search for a Chat server\nType ""/help"" for list of accepted commands\nType ""/exit"" to quit Simple Chat\nAll commands are case sensitive!" << endl;
-		mainChat();
-	}
-	else if (MainPrompt == "")
-	{
-		cout << "ERROR: No text was received!" << endl;
-		mainChat();
-	}
-	else if (MainPrompt == "/exit")
-	{
-		cout << "Exiting application" << endl;
-		return 2;
-	}
-	else
-	{
-		cout << "ERROR: Invalid command!" << endl;
-		mainChat();
-	}
-	//cout  << MainPrompt[0] << endl;
-	//system("pause");//Replace with better pause function!
-	
+
 }
 
 int main()
 {
-	cout << "Welcome to Benargee's Simple Chat.\nType ""/server"" to host a chat server\nType ""/client"" to search for a Chat server\nType ""/help"" for list of accepted commands\nAll commands are case sensitive!" << endl;
-	int ret = mainChat();
-	return ret;
+	outy = 0;
+	char str[80];
+	initscr();			/* Start curses mode 		*/
+
+	getmaxyx(stdscr, row, col);
+	move(row - 1, 0);// move cursor to bottom left of screen
+	refresh();
+	iny = row - 1;
+	inx = 0;
+	//curs_set(2); //cursor visibility
+	raw();				/* Line buffering disabled	*/
+						//keypad(stdscr, TRUE);		/* We get F1, F2 etc..		*/
+	noecho();			/* Don't echo() while we do getch */
+
+
+	thread outputThread(outputTimer);
+
+	submain1();
+
+	refresh();
+	endwin();
+
+	//main();
+	return 0;
 }
 
