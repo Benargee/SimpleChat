@@ -1,0 +1,1 @@
+#define MessageMaxSize 70 //determines the maximum size for the whole application

@@ -1,16 +1,21 @@
 // Simple Chat.cpp : Defines the entry point for the console application.
 //
 
+//TODO: Add basic network functionality
+//TODO: Add basic command parsing as it was in the old iostream based proof of concept
+
 #include "stdafx.h"
 #include <curses.h>
 #include <thread>
 #include <windows.h>
+#include "simpleChatDefines.h"
 
 using namespace std;
 
-int ch, inx, iny, outx, outy;
+//TODO: Properly name variables and comment their functions
+int ch, inx, iny, outx, outy; 
 int row, col, cursx, cursy;
-char mesg[500];
+char mesg[MessageMaxSize];
 
 
 //constantly output incrementing numbers untill program is closed
@@ -36,24 +41,20 @@ void outputTimer() {
 
 void submain1()
 {
-	//char mychar;
+	
 	ch = getch();
-	//mvaddch(20, 5, ch);
-
-	switch (ch)  //if enter is pressed, delete input line and reset input cursor position
+	
+	switch (ch)  
 	{
 	case 13:   //if enter is pressed, delete input line and reset input cursor position
 		mvprintw(outy, 0, "%s", mesg);	// print message to chat
 		move(row - 1, 0);
 		memset(mesg, 0, sizeof mesg); //empty mesg[80] and get it ready for a new input message
 		clrtoeol();
-		refresh();
-		iny = row - 1;
+		iny = row - 1; 
 		inx = 0;
-
-
 		outy++;
-		submain1();
+		break;
 
 	case 8: //backspace						
 		if (inx > 0) // if cursor is already at the start of the line, do not bother backspacing characters
@@ -63,19 +64,20 @@ void submain1()
 			move(row - 1, inx);
 			mesg[inx] = '\0';//set charachter to null
 		}
-		refresh();
-		submain1();
-
+		break;
 
 	default:
-		mvprintw(20, 20, "%i %i", ch, inx);	 //debug, print character as an integer on screen
-		mvprintw(iny, inx, "%c", ch);
-		mesg[inx] = ch;
-		inx++;
-		refresh();
-		submain1();
+		if (inx < MessageMaxSize)
+		{
+			mvprintw(iny, inx, "%c", ch);
+			mesg[inx] = ch;
+			inx++;
+		}
 	}
-
+	mvprintw(row - 2, 0, "Character limit:%i/%i  ", inx, MessageMaxSize); //Output current character count/maximum character count
+	move(row - 1, inx);
+	refresh();
+	submain1();
 }
 
 int main()
@@ -91,7 +93,7 @@ int main()
 	inx = 0;
 	//curs_set(2); //cursor visibility
 	raw();				/* Line buffering disabled	*/
-						//keypad(stdscr, TRUE);		/* We get F1, F2 etc..		*/
+	//keypad(stdscr, TRUE);		/* We get F1, F2 etc..		*/
 	noecho();			/* Don't echo() while we do getch */
 
 
