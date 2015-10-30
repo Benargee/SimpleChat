@@ -5,12 +5,12 @@
 //TODO: Add basic command parsing as it was in the old iostream based proof of concept
 
 #include "stdafx.h"
-#include <curses.h>
+#include <curses.h>//PDCurses 3.4
 #include <thread>
-#include <windows.h>
-#include "simpleChatDefines.h"
+#include <windows.h> //Sleep()
 
-using namespace std;
+
+using namespace std;//-TODO: Refrain from using 
 
 //TODO: Properly name variables and comment their functions
 int ch, inx, iny, outx, outy; 
@@ -39,7 +39,7 @@ void outputTimer() {
 }
 
 
-void submain1()
+void submain1()//TODO: Rename to more suitable name
 {
 	
 	ch = getch();

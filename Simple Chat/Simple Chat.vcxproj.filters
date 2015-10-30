@@ -30,12 +30,18 @@
     <ClInclude Include="simpleChatDefines.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="msgSC.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Simple Chat.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="msgSC.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
