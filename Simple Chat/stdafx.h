@@ -10,7 +10,13 @@
 #include <stdio.h>
 #include <tchar.h>
 
+#include <curses.h>//PDCurses 3.4
+#include <thread>
+#include <windows.h> //Sleep()
+
 #include "simpleChatDefines.h"
+
+#include "functions.h"
 
 
 

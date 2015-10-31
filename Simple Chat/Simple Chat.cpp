@@ -5,20 +5,19 @@
 //TODO: Add basic command parsing as it was in the old iostream based proof of concept
 
 #include "stdafx.h"
-#include <curses.h>//PDCurses 3.4
-#include <thread>
-#include <windows.h> //Sleep()
 
 
-using namespace std;//-TODO: Refrain from using 
+
+using namespace std;//-TODO: Refrain from using std
 
 //TODO: Properly name variables and comment their functions
 int ch, inx, iny, outx, outy; 
 int row, col, cursx, cursy;
-char mesg[MessageMaxSize];
+char mesg[MessageMaxSize];//text buffer for message input
+bool command = false;//determines if chat input is in command mode or not
 
 
-//constantly output incrementing numbers untill program is closed
+//constantly output incrementing numbers untill program is closed for debug purposes
 void outputTimer() {
 	int mynum;
 
@@ -38,46 +37,73 @@ void outputTimer() {
 	data will be stored in memory and then printed from memory.*/
 }
 
-
+//TODO: clean up input handling
 void submain1()//TODO: Rename to more suitable name
 {
 	
-	ch = getch();
-	
-	switch (ch)  
+	while (true)
 	{
-	case 13:   //if enter is pressed, delete input line and reset input cursor position
-		mvprintw(outy, 0, "%s", mesg);	// print message to chat
-		move(row - 1, 0);
-		memset(mesg, 0, sizeof mesg); //empty mesg[80] and get it ready for a new input message
-		clrtoeol();
-		iny = row - 1; 
-		inx = 0;
-		outy++;
-		break;
+		ch = getch();
 
-	case 8: //backspace						
-		if (inx > 0) // if cursor is already at the start of the line, do not bother backspacing characters
+		switch (ch)  //Take appropriate action when special characters are used
 		{
-			inx--;
-			mvprintw(iny, inx, "%c", 32);
-			move(row - 1, inx);
-			mesg[inx] = '\0';//set charachter to null
-		}
-		break;
+		case 13:   //if enter is pressed, delete input line and reset input cursor position
+			if (!command)//if chat is in command mode, do not print message to chat 
+			{
+				mvprintw(outy, 0, "%s", mesg);	// print message to chat
+				outy++;//increment text output row
+			}
+			else 
+			{
+				command = false;
+				//Launch command function here
+				doCMD(mesg);//TODO: temp name
+			}
 
-	default:
-		if (inx < MessageMaxSize)
-		{
-			mvprintw(iny, inx, "%c", ch);
-			mesg[inx] = ch;
-			inx++;
+			move(row - 1, 0);//return cursor to left of screen
+			memset(mesg, 0, sizeof mesg); //empty mesg[MessageMaxSize] and get it ready for a new input message
+			clrtoeol(); //clear to end of line
+			iny = row - 1;
+			inx = 0;
+
+			break;
+
+		case 8: //backspace						
+			if (inx > 0) // if cursor is already at the start of the line, do not bother backspacing characters
+			{
+				inx--;
+				mvprintw(iny, inx, "%c", 32);
+				move(row - 1, inx);
+				mesg[inx] = '\0';//set charachter to null
+
+				if (inx == 0 && command)//if at first character and command mode is enabled
+					command = false;//disable command mode
+			}
+			break;
+
+		case 47:// "/" used for command mode. When first character is a "/" chat goes into command mode
+
+			if (inx == 0)//if at first character, enter command mode
+			{
+				command = true;//enable command mode
+			}
+			//break;
+
+		default:
+			if (inx < MessageMaxSize)
+			{
+				mvprintw(iny, inx, "%c", ch);
+				mesg[inx] = ch;
+				inx++;
+			}
 		}
+		mvprintw(row - 2, 0, "Character limit:%i/%i %i ", inx, MessageMaxSize, command); //Output current character count/maximum character count
+		move(row - 1, inx);//return cursor to text entry field for visual purposes
+		refresh();
 	}
-	mvprintw(row - 2, 0, "Character limit:%i/%i  ", inx, MessageMaxSize); //Output current character count/maximum character count
-	move(row - 1, inx);
-	refresh();
-	submain1();
+
+	//exit:
+	
 }
 
 int main()
@@ -91,7 +117,7 @@ int main()
 	refresh();
 	iny = row - 1;
 	inx = 0;
-	//curs_set(2); //cursor visibility
+	//curs_set(0); //cursor visibility
 	raw();				/* Line buffering disabled	*/
 	//keypad(stdscr, TRUE);		/* We get F1, F2 etc..		*/
 	noecho();			/* Don't echo() while we do getch */
