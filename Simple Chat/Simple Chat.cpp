@@ -112,7 +112,7 @@ int main()
 	char str[80];
 	initscr();			/* Start curses mode 		*/
 
-	getmaxyx(stdscr, row, col);
+	getmaxyx(stdscr, row, col);//get terminal size/resolution
 	move(row - 1, 0);// move cursor to bottom left of screen
 	refresh();
 	iny = row - 1;
