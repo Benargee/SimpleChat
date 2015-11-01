@@ -17,7 +17,7 @@ char mesg[MessageMaxSize];//text buffer for message input
 bool command = false;//determines if chat input is in command mode or not
 
 
-//constantly output incrementing numbers untill program is closed for debug purposes
+//constantly output incrementing numbers until program is closed for debug purposes
 void outputTimer() {
 	int mynum;
 
@@ -74,7 +74,7 @@ void submain1()//TODO: Rename to more suitable name
 				inx--;
 				mvprintw(iny, inx, "%c", 32);
 				move(row - 1, inx);
-				mesg[inx] = '\0';//set charachter to null
+				mesg[inx] = '\0';//set character to null
 
 				if (inx == 0 && command)//if at first character and command mode is enabled
 					command = false;//disable command mode
