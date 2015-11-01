@@ -8,7 +8,7 @@
 
 
 
-using namespace std;//-TODO: Refrain from using std
+//using namespace std;//-TODO: Refrain from using std
 
 //TODO: Properly name variables and comment their functions
 int ch, inx, iny, outx, outy; 
@@ -38,10 +38,11 @@ void outputTimer() {
 }
 
 //TODO: clean up input handling
-void submain1()//TODO: Rename to more suitable name
+int submain1()//TODO: Rename to more suitable name
 {
-	
-	while (true)
+	int cmdRet;
+	bool runChat = true;
+	while (runChat)
 	{
 		ch = getch();
 
@@ -57,7 +58,11 @@ void submain1()//TODO: Rename to more suitable name
 			{
 				command = false;
 				//Launch command function here
-				doCMD(mesg);//TODO: temp name
+				cmdRet =  doCMD(mesg);//TODO: temp name
+				//break;
+				if (cmdRet == 1)
+					return 0;
+				//runChat = false;
 			}
 
 			move(row - 1, 0);//return cursor to left of screen
@@ -100,16 +105,17 @@ void submain1()//TODO: Rename to more suitable name
 		mvprintw(row - 2, 0, "Character limit:%i/%i %i ", inx, MessageMaxSize, command); //Output current character count/maximum character count
 		move(row - 1, inx);//return cursor to text entry field for visual purposes
 		refresh();
+
 	}
 
-	//exit:
+	
+	return 0;
 	
 }
 
 int main()
 {
 	outy = 0;
-	char str[80];
 	initscr();			/* Start curses mode 		*/
 
 	getmaxyx(stdscr, row, col);//get terminal size/resolution
@@ -123,9 +129,13 @@ int main()
 	noecho();			/* Don't echo() while we do getch */
 
 
-	thread outputThread(outputTimer);
+	std::thread outputThread(outputTimer);
 
 	submain1();
+	
+	//TODO: need proper thread termination
+	outputThread.detach();
+	outputThread.~thread();
 
 	refresh();
 	endwin();

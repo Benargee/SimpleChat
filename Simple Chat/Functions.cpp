@@ -3,7 +3,7 @@
 
 //Get command name and store it
 //get arguments and store them. String literals are a single argument
-void doCMD(char input[MessageMaxSize]) {
+int doCMD(char input[MessageMaxSize]) {
 	input++; //ignore "/"
 	char *splitInput;//Command and arguments for strtok_s
 	int argCount = 0;
@@ -15,7 +15,7 @@ void doCMD(char input[MessageMaxSize]) {
 	char *command = splitInput;//stores the command
 	while (splitInput != NULL)
 	{
-		mvprintw(3 + argCount, 20, "split: %s-%i:%i", command, strlen(splitInput), strlen (input));//debug TODO
+		mvprintw(3 + argCount, 20, "split: %s-%s:%s", command, next_token, splitInput);//debug TODO
 		splitInput = strtok_s(NULL, seps, &next_token);
 
 		argCount++;
@@ -24,7 +24,8 @@ void doCMD(char input[MessageMaxSize]) {
 	if (strcmp (command,"exit") == 0)
 	{
 		//Exit application
-		mvprintw(3 + argCount, 20, "EXIT");//debug TODO
+		//mvprintw(3 + argCount, 20, "EXIT");//debug TODO]
+		return 1;
 	}else if (strcmp(command, "help") == 0)
 	{
 		//Open help window
@@ -33,6 +34,6 @@ void doCMD(char input[MessageMaxSize]) {
 
 	refresh();
 	refresh();
-
+	return 0;
 }
 

@@ -1,3 +1,3 @@
 #pragma once
 
-void doCMD(char input[]);
+int doCMD(char input[]);
