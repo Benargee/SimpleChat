@@ -133,7 +133,7 @@ int main()
 
 	submain1();
 	
-	//TODO: need proper thread termination
+	//TODO: need proper thread termination http://stackoverflow.com/questions/19744250/c11-what-happens-to-a-detached-thread-when-main-exits
 	outputThread.detach();
 	outputThread.~thread();
 

@@ -3,6 +3,7 @@
 
 //Get command name and store it
 //get arguments and store them. String literals are a single argument
+//BUG!! When just typing in "/" program will crash! look at strcmp()
 int doCMD(char input[MessageMaxSize]) {
 	input++; //ignore "/"
 	char *splitInput;//Command and arguments for strtok_s

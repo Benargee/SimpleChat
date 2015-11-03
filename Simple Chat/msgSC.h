@@ -27,3 +27,5 @@ public:
 	~msgListSC();
 };
 
+//TODO: Add class/structure for the chat display. This will manage displayed chat history from overall chat history
+
