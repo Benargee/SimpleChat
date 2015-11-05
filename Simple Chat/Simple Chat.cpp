@@ -105,12 +105,8 @@ int submain1()//TODO: Rename to more suitable name
 		mvprintw(row - 2, 0, "Character limit:%i/%i %i ", inx, MessageMaxSize, command); //Output current character count/maximum character count
 		move(row - 1, inx);//return cursor to text entry field for visual purposes
 		refresh();
-
 	}
-
-	
-	return 0;
-	
+	return 0;	
 }
 
 int main()

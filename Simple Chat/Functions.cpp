@@ -3,7 +3,7 @@
 
 //Get command name and store it
 //get arguments and store them. String literals are a single argument
-//BUG!! When just typing in "/" program will crash! look at strcmp()
+//BUG!! When just typing in "/" program will crash! look at _stricmp()
 int doCMD(char input[MessageMaxSize]) {
 	input++; //ignore "/"
 	char *splitInput;//Command and arguments for strtok_s
@@ -22,12 +22,12 @@ int doCMD(char input[MessageMaxSize]) {
 		argCount++;
 	}
 
-	if (strcmp (command,"exit") == 0)
+	if (_stricmp(command,"exit") == 0)//Case insensitive string comparison
 	{
 		//Exit application
 		//mvprintw(3 + argCount, 20, "EXIT");//debug TODO]
 		return 1;
-	}else if (strcmp(command, "help") == 0)
+	}else if (_stricmp(command, "help") == 0)
 	{
 		//Open help window
 		mvprintw(3 + argCount, 20, "HELP");//debug TODO
