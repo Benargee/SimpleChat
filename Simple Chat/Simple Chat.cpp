@@ -1,4 +1,4 @@
-// Simple Chat.cpp : Defines the entry point for the console application.
+// main.cpp : Defines the entry point for the console application.
 //
 
 //TODO: Add basic network functionality
@@ -15,6 +15,12 @@ int ch, inx, iny, outx, outy;
 int row, col, cursx, cursy;
 char mesg[MessageMaxSize];//text buffer for message input
 bool command = false;//determines if chat input is in command mode or not
+
+msgListHistorySC mainChatHistory;
+msgListDispSC mainChatList;
+
+
+
 
 
 //constantly output incrementing numbers until program is closed for debug purposes
@@ -52,6 +58,7 @@ int submain1()//TODO: Rename to more suitable name
 			if (!command)//if chat is in command mode, do not print message to chat 
 			{
 				mvprintw(outy, 0, "%s", mesg);	// print message to chat
+				//inputChat(mesg,mainChatHistory,mainChatList);//New function to handle chat input
 				outy++;//increment text output row
 			}
 			else 
@@ -125,13 +132,13 @@ int main()
 	noecho();			/* Don't echo() while we do getch */
 
 
-	std::thread outputThread(outputTimer);
+	//std::thread outputThread(outputTimer);
 
 	submain1();
 	
 	//TODO: need proper thread termination http://stackoverflow.com/questions/19744250/c11-what-happens-to-a-detached-thread-when-main-exits
-	outputThread.detach();
-	outputThread.~thread();
+	//outputThread.detach();
+	//outputThread.~thread();
 
 	refresh();
 	endwin();

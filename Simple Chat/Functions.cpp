@@ -11,7 +11,7 @@ int doCMD(char input[MessageMaxSize]) {
 	char *next_token = NULL;//(strtok_s)
 	char seps[] = " ";
 	
-	mvprintw(2, 2, "CMD %s ", input);//debug TODO
+	//mvprintw(2, 2, "CMD %s ", input);//debug TODO
 	splitInput = strtok_s(input, seps, &next_token);
 	char *command = splitInput;//stores the command
 	while (splitInput != NULL)
@@ -38,3 +38,7 @@ int doCMD(char input[MessageMaxSize]) {
 	return 0;
 }
 
+void inputChat(char *inputMessage, msgListHistorySC ListHistoryOBJ, msgListDispSC ListDisplayOBJ){
+	
+
+}

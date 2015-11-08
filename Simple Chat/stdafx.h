@@ -17,6 +17,7 @@
 #include "simpleChatDefines.h"
 
 #include "functions.h"
+#include "msgSC.h"
 
 
 

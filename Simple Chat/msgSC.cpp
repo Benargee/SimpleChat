@@ -14,12 +14,33 @@ msgSC::~msgSC()
 
 
 // Extra classes. May need to be moved to new file or just have file renamed.
-
-msgListSC::msgListSC()
+//msgListHistorySC
+msgListHistorySC::msgListHistorySC()
 {
+	lastMessage = 0;
+	firstMessage = 0;
 }
 
 
-msgListSC::~msgListSC()
+msgListHistorySC::~msgListHistorySC()
+{
+}
+
+//msgListDispSC
+msgListDispSC::msgListDispSC()
+{
+	lastMessage = 0;
+	firstMessage = 0;
+
+}
+
+msgListDispSC::~msgListDispSC()
+{
+}
+
+void msgListDispSC::addMsg()
+{
+}
+void msgListDispSC::scroll(int value)
 {
 }
