@@ -58,7 +58,8 @@ int submain1()//TODO: Rename to more suitable name
 			if (!command)//if chat is in command mode, do not print message to chat 
 			{
 				mvprintw(outy, 0, "%s", mesg);	// print message to chat
-				//inputChat(mesg,mainChatHistory,mainChatList);//New function to handle chat input
+				inputChat(mesg,mainChatHistory,mainChatList);//New function to handle chat input
+				//mainChatList.addMsg(mesg);
 				outy++;//increment text output row
 			}
 			else 

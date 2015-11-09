@@ -38,7 +38,9 @@ int doCMD(char input[MessageMaxSize]) {
 	return 0;
 }
 
-void inputChat(char *inputMessage, msgListHistorySC ListHistoryOBJ, msgListDispSC ListDisplayOBJ){
-	
+//Currently this function makes a local copy of the object instead of modifying the original object http://stackoverflow.com/questions/1698660/when-i-change-a-parameter-inside-a-function-does-it-change-for-the-caller-too
+/**/
+void inputChat(char *inputMessage, msgListHistorySC& ListHistoryOBJ, msgListDispSC& ListDisplayOBJ){
+	ListDisplayOBJ.addMsg(inputMessage);
 
 }
