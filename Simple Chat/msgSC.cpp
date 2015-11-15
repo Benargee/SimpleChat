@@ -14,7 +14,7 @@ msgSC::~msgSC()
 
 
 // Extra classes. May need to be moved to new file or just have file renamed.
-//msgListHistorySC
+//msgListHistorySC =================================================================================
 msgListHistorySC::msgListHistorySC()
 {
 	lastMessage = 0;
@@ -34,7 +34,7 @@ void msgListHistorySC::addMsg()
 	}
 }
 
-//msgListDispSC
+//msgListDispSC ==================================================================================
 msgListDispSC::msgListDispSC()
 {
 	//lastMessage = 0;
@@ -58,6 +58,22 @@ void msgListDispSC::addMsg(char message[MessageMaxSize])
 	}
 
 }
+
 void msgListDispSC::scroll(int value)
 {
+	//
 }
+
+char* msgListDispSC::getMessage(int messageNumber)
+{
+	//gets messages in their intended order. getMessage(0) gets the most recent message
+	messageNumber++;
+	int messageIndex = (-1 * messageNumber) + lastMessage;
+	
+	if (messageIndex > MessageDisplaySize)
+		messageIndex = (lastMessage - MessageDisplaySize) + messageNumber;
+
+	char* messageReturn = messageList[messageIndex].message;
+	return messageReturn;
+}
+

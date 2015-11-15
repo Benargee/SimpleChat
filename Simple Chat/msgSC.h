@@ -47,6 +47,7 @@ public:
 	~msgListDispSC();
 	void addMsg(char message[MessageMaxSize]);
 	void scroll(int value);
+	char* getMessage(int messageNumber); //gets messages in their intended order. getMessage(0) gets the most recent message
 
 };
 

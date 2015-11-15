@@ -58,7 +58,7 @@ int submain1()//TODO: Rename to more suitable name
 			if (!command)//if chat is in command mode, do not print message to chat 
 			{
 				mvprintw(outy, 0, "%s", mesg);	// print message to chat
-				inputChat(mesg,mainChatHistory,mainChatList);//New function to handle chat input
+				inputChat(mesg, mainChatHistory,mainChatList);//New function to handle chat input
 				//mainChatList.addMsg(mesg);
 				outy++;//increment text output row
 			}
@@ -66,7 +66,7 @@ int submain1()//TODO: Rename to more suitable name
 			{
 				command = false;
 				//Launch command function here
-				cmdRet =  doCMD(mesg);//TODO: temp name
+				cmdRet =  doCMD(mesg, mainChatHistory, mainChatList);//TODO: temp name
 				//break;
 				if (cmdRet == 1)
 					return 0;

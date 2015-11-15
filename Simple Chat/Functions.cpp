@@ -4,7 +4,7 @@
 //Get command name and store it
 //get arguments and store them. String literals are a single argument
 //BUG!! When just typing in "/" program will crash! look at _stricmp()
-int doCMD(char input[MessageMaxSize]) {
+int doCMD(char input[MessageMaxSize], msgListHistorySC& ListHistoryOBJ, msgListDispSC& ListDisplayOBJ) {
 	input++; //ignore "/"
 	char *splitInput;//Command and arguments for strtok_s
 	int argCount = 0;
@@ -16,7 +16,7 @@ int doCMD(char input[MessageMaxSize]) {
 	char *command = splitInput;//stores the command
 	while (splitInput != NULL)
 	{
-		mvprintw(3 + argCount, 20, "split: %s-%s:%s", command, next_token, splitInput);//debug TODO
+		mvprintw(3 + argCount, 20, "cmd: %s arg:%i SI:%s", command, argCount, splitInput);//debug TODO
 		splitInput = strtok_s(NULL, seps, &next_token);
 
 		argCount++;
@@ -31,6 +31,11 @@ int doCMD(char input[MessageMaxSize]) {
 	{
 		//Open help window
 		mvprintw(3 + argCount, 20, "HELP");//debug TODO
+	}else if (_stricmp(command, "getmsg") == 0)//debug
+	{
+		//debug
+		mvprintw(3 + argCount, 20, "MSG %s", ListDisplayOBJ.getMessage(0));//debug TODO
+		
 	}
 
 	refresh();

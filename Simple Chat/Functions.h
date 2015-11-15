@@ -2,7 +2,7 @@
 
 #include "msgSC.h"
 
-int doCMD(char input[]);
+int doCMD(char input[], msgListHistorySC& ListHistoryOBJ, msgListDispSC& ListDisplayOBJ);
 
 void inputChat(char *inputMessage, msgListHistorySC& ListHistoryOBJ, msgListDispSC& ListDisplayOBJ);//Locally add entry to chat. From here messages will be handled and displayed to chat.
 
