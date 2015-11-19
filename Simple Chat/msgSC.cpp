@@ -49,30 +49,33 @@ msgListDispSC::~msgListDispSC()
 
 void msgListDispSC::addMsg(char message[MessageMaxSize])
 {
+	
 	//msgSC* newMSG = new msgSC;//http://stackoverflow.com/questions/6337294/creating-an-object-with-or-without-new
 	strncpy_s(messageList[lastMessage].message, MessageMaxSize, message, _TRUNCATE);
 	//messageList[lastMessage].message = message;
-	lastMessage++;
-	if (lastMessage >= MessageDisplaySize) {
+	
+	if (lastMessage >= (MessageDisplaySize - 1)) {
 		lastMessage = 0;
+	}
+	else {
+		lastMessage++;
 	}
 
 }
 
 void msgListDispSC::scroll(int value)
 {
-	//
+	//TODO: This function will allow user to scroll through chat history
 }
 
 char* msgListDispSC::getMessage(int messageNumber)
 {
 	//gets messages in their intended order. getMessage(0) gets the most recent message
-	messageNumber++;
-	int messageIndex = (-1 * messageNumber) + lastMessage;
+	int messageIndex = (messageNumber) + lastMessage;
 	
-	if (messageIndex > MessageDisplaySize)
-		messageIndex = (lastMessage - MessageDisplaySize) + messageNumber;
-
+	if (messageIndex >= MessageDisplaySize)
+		messageIndex = (lastMessage - MessageDisplaySize) + messageNumber;//(-)+
+		
 	char* messageReturn = messageList[messageIndex].message;
 	return messageReturn;
 }

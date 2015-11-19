@@ -11,7 +11,7 @@
 //using namespace std;//-TODO: Refrain from using std
 
 //TODO: Properly name variables and comment their functions
-int ch, inx, iny, outx, outy; 
+int ch, inx, iny; 
 int row, col, cursx, cursy;
 char mesg[MessageMaxSize];//text buffer for message input
 bool command = false;//determines if chat input is in command mode or not
@@ -29,14 +29,8 @@ void outputTimer() {
 
 	for (mynum = 0; mynum <= 15; mynum++)
 	{
-		//getyx(stdscr, cursy, cursx);
-		mvprintw(outy, 0, "Sample message %i", mynum);
-		outy++;
-		//printw("%i %i %i\n", mynum, cursy, iny);
-		move(row - 1, inx);
-		refresh();
+		inputChat("Sample message", mainChatHistory, mainChatList);
 		Sleep(3000);
-
 	}
 	//refresh();
 	/*add function to start printing from bottom and shift rows up. history could be stored in a pointer array  to strings of 500 character lengths. struct could be used for this?
@@ -47,8 +41,7 @@ void outputTimer() {
 int submain1()//TODO: Rename to more suitable name
 {
 	int cmdRet;
-	bool runChat = true;
-	while (runChat)
+	while (true)
 	{
 		ch = getch();
 
@@ -57,20 +50,15 @@ int submain1()//TODO: Rename to more suitable name
 		case 13:   //if enter is pressed, delete input line and reset input cursor position
 			if (!command)//if chat is in command mode, do not print message to chat 
 			{
-				mvprintw(outy, 0, "%s", mesg);	// print message to chat
 				inputChat(mesg, mainChatHistory,mainChatList);//New function to handle chat input
-				//mainChatList.addMsg(mesg);
-				outy++;//increment text output row
 			}
 			else 
 			{
-				command = false;
+				command = false;//flag. Determines if chat is in command mode or not
 				//Launch command function here
 				cmdRet =  doCMD(mesg, mainChatHistory, mainChatList);//TODO: temp name
-				//break;
 				if (cmdRet == 1)
 					return 0;
-				//runChat = false;
 			}
 
 			move(row - 1, 0);//return cursor to left of screen
@@ -98,7 +86,7 @@ int submain1()//TODO: Rename to more suitable name
 
 			if (inx == 0)//if at first character, enter command mode
 			{
-				command = true;//enable command mode
+				command = true;//flag. enable command mode
 			}
 			//break;
 
@@ -119,7 +107,6 @@ int submain1()//TODO: Rename to more suitable name
 
 int main()
 {
-	outy = 0;
 	initscr();			/* Start curses mode 		*/
 
 	getmaxyx(stdscr, row, col);//get terminal size/resolution
@@ -144,7 +131,6 @@ int main()
 	refresh();
 	endwin();
 
-	//main();
 	return 0;
 }
 

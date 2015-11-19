@@ -31,21 +31,30 @@ int doCMD(char input[MessageMaxSize], msgListHistorySC& ListHistoryOBJ, msgListD
 	{
 		//Open help window
 		mvprintw(3 + argCount, 20, "HELP");//debug TODO
-	}else if (_stricmp(command, "getmsg") == 0)//debug
-	{
-		//debug
-		mvprintw(3 + argCount, 20, "MSG %s", ListDisplayOBJ.getMessage(0));//debug TODO
-		
 	}
 
-	refresh();
 	refresh();
 	return 0;
 }
 
-//Currently this function makes a local copy of the object instead of modifying the original object http://stackoverflow.com/questions/1698660/when-i-change-a-parameter-inside-a-function-does-it-change-for-the-caller-too
+//(FIXED)Currently this function makes a local copy of the object instead of modifying the original object http://stackoverflow.com/questions/1698660/when-i-change-a-parameter-inside-a-function-does-it-change-for-the-caller-too
 /**/
+
+//input entry into chat and update display. 
 void inputChat(char *inputMessage, msgListHistorySC& ListHistoryOBJ, msgListDispSC& ListDisplayOBJ){
 	ListDisplayOBJ.addMsg(inputMessage);
+	updateDisplay(ListDisplayOBJ); //after msg has been added, update display
 
 }
+
+
+
+void updateDisplay(msgListDispSC& ListDisplayOBJ){
+//do a for loop for each display line and mvprint() accordingly. then refresh.
+	for (int x = 0; x < MessageDisplaySize; x++) {
+		mvprintw(x, 0, "%s", ListDisplayOBJ.getMessage(x));
+		clrtoeol();
+	}
+};
+
+

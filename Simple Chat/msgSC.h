@@ -40,9 +40,9 @@ class msgListDispSC //Message display list. There will only be a single instance
 {
 	int lastMessage = 0;
 	int firstMessage = 0;
-	msgSC messageList[MessageDisplaySize];
-public:
 	
+public:
+	msgSC messageList[MessageDisplaySize];//TODO move back to private ^^
 	msgListDispSC();
 	~msgListDispSC();
 	void addMsg(char message[MessageMaxSize]);
@@ -50,4 +50,5 @@ public:
 	char* getMessage(int messageNumber); //gets messages in their intended order. getMessage(0) gets the most recent message
 
 };
+
 
