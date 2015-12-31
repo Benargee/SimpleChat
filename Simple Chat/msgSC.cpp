@@ -29,7 +29,7 @@ msgListHistorySC::~msgListHistorySC()
 void msgListHistorySC::addMsg()
 {
 	lastMessage++;
-	if (lastMessage >= MessageHistorySize) {
+	if (lastMessage >= MESSAGE_HISTORY_SIZE) {
 		lastMessage = 0;
 	}
 }
@@ -47,14 +47,14 @@ msgListDispSC::~msgListDispSC()
 {
 }
 
-void msgListDispSC::addMsg(char message[MessageMaxSize])
+void msgListDispSC::addMsg(char message[MESSAGE_MAX_SIZE])
 {
 	
 	//msgSC* newMSG = new msgSC;//http://stackoverflow.com/questions/6337294/creating-an-object-with-or-without-new
-	strncpy_s(messageList[lastMessage].message, MessageMaxSize, message, _TRUNCATE);
+	strncpy_s(messageList[lastMessage].message, MESSAGE_MAX_SIZE, message, _TRUNCATE);
 	//messageList[lastMessage].message = message;
 	
-	if (lastMessage >= (MessageDisplaySize - 1)) {
+	if (lastMessage >= (MESSAGE_DISPLAY_SIZE - 1)) {
 		lastMessage = 0;
 	}
 	else {
@@ -73,8 +73,8 @@ char* msgListDispSC::getMessage(int messageNumber)
 	//gets messages in their intended order. getMessage(0) gets the most recent message
 	int messageIndex = (messageNumber) + lastMessage;
 	
-	if (messageIndex >= MessageDisplaySize)
-		messageIndex = (lastMessage - MessageDisplaySize) + messageNumber;//(-)+
+	if (messageIndex >= MESSAGE_DISPLAY_SIZE)
+		messageIndex = (lastMessage - MESSAGE_DISPLAY_SIZE) + messageNumber;//(-)+
 		
 	char* messageReturn = messageList[messageIndex].message;
 	return messageReturn;

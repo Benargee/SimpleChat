@@ -7,11 +7,11 @@
 
 class msgSC //Single message
 {
-	char userName[UserNameMaxSize];//Username variable
+	char userName[USERNAME_MAX_SIZE];//Username variable
 	
 	char time[20];//Delivery time of message. TODO: use different type for storing time
 public:
-	char message[MessageMaxSize];//Actual message text//TODO: Move back to private? //example access mainChatList.messageList[7].message
+	char message[MESSAGE_MAX_SIZE];//Actual message text//TODO: Move back to private? //example access mainChatList.messageList[7].message
 	msgSC();
 	~msgSC();
 };
@@ -27,7 +27,7 @@ class msgListHistorySC //Message history list. There will only be a single insta
 {
 	int lastMessage = 0; //Points to the most recent message stored in the chat history
 	int firstMessage = 0; //Points to the oldest message in chat history. This will be the next message deleted out of the queue
-	msgSC messageList[MessageHistorySize]; //This is the array that stores pointers to each message object (msgSC)
+	msgSC messageList[MESSAGE_HISTORY_SIZE]; //This is the array that stores pointers to each message object (msgSC)
 public:
 	msgListHistorySC();
 	~msgListHistorySC();
@@ -42,10 +42,10 @@ class msgListDispSC //Message display list. There will only be a single instance
 	int firstMessage = 0;
 	
 public:
-	msgSC messageList[MessageDisplaySize];//TODO move back to private ^^
+	msgSC messageList[MESSAGE_DISPLAY_SIZE];//TODO move back to private ^^
 	msgListDispSC();
 	~msgListDispSC();
-	void addMsg(char message[MessageMaxSize]);
+	void addMsg(char message[MESSAGE_MAX_SIZE]);
 	void scroll(int value);
 	char* getMessage(int messageNumber); //gets messages in their intended order. getMessage(0) gets the most recent message
 

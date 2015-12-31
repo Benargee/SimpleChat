@@ -13,9 +13,11 @@
 //TODO: Properly name variables and comment their functions
 int ch, inx, iny; 
 int row, col, cursx, cursy;
-char mesg[MessageMaxSize];//text buffer for message input
+char mesg[MESSAGE_MAX_SIZE];//text buffer for message input
 bool command = false;//determines if chat input is in command mode or not
+int appMode = NO_CONNECTION;
 
+//Global objects
 msgListHistorySC mainChatHistory;
 msgListDispSC mainChatList;
 
@@ -30,6 +32,7 @@ void outputTimer() {
 	for (mynum = 0; mynum <= 15; mynum++)
 	{
 		inputChat("Sample message", mainChatHistory, mainChatList);
+		refresh();
 		Sleep(3000);
 	}
 	//refresh();
@@ -38,7 +41,7 @@ void outputTimer() {
 }
 
 //TODO: clean up input handling
-int submain1()//TODO: Rename to more suitable name
+int inputMain()
 {
 	int cmdRet;
 	while (true)
@@ -91,14 +94,14 @@ int submain1()//TODO: Rename to more suitable name
 			//break;
 
 		default:
-			if (inx < MessageMaxSize)
+			if (inx < MESSAGE_MAX_SIZE)
 			{
 				mvprintw(iny, inx, "%c", ch);
 				mesg[inx] = ch;
 				inx++;
 			}
 		}
-		mvprintw(row - 2, 0, "Character limit:%i/%i %i ", inx, MessageMaxSize, command); //Output current character count/maximum character count
+		mvprintw(row - 2, 0, "Character limit:%i/%i %i ", inx, MESSAGE_MAX_SIZE, command); //Output current character count/maximum character count
 		move(row - 1, inx);//return cursor to text entry field for visual purposes
 		refresh();
 	}
@@ -122,7 +125,7 @@ int main()
 
 	//std::thread outputThread(outputTimer);
 
-	submain1();
+	inputMain();
 	
 	//TODO: need proper thread termination http://stackoverflow.com/questions/19744250/c11-what-happens-to-a-detached-thread-when-main-exits
 	//outputThread.detach();

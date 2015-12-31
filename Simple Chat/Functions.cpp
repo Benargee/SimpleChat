@@ -4,7 +4,7 @@
 //Get command name and store it
 //get arguments and store them. String literals are a single argument
 //BUG!! When just typing in "/" program will crash! look at _stricmp()
-int doCMD(char input[MessageMaxSize], msgListHistorySC& ListHistoryOBJ, msgListDispSC& ListDisplayOBJ) {
+int doCMD(char input[MESSAGE_MAX_SIZE], msgListHistorySC& ListHistoryOBJ, msgListDispSC& ListDisplayOBJ) {
 	input++; //ignore "/"
 	char *splitInput;//Command and arguments for strtok_s
 	int argCount = 0;
@@ -51,10 +51,13 @@ void inputChat(char *inputMessage, msgListHistorySC& ListHistoryOBJ, msgListDisp
 
 void updateDisplay(msgListDispSC& ListDisplayOBJ){
 //do a for loop for each display line and mvprint() accordingly. then refresh.
-	for (int x = 0; x < MessageDisplaySize; x++) {
+	for (int x = 0; x < MESSAGE_DISPLAY_SIZE; x++) {
 		mvprintw(x, 0, "%s", ListDisplayOBJ.getMessage(x));
 		clrtoeol();
 	}
 };
 
 
+void switchAppMode(int mode) {
+
+};
